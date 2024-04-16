@@ -19,3 +19,5 @@ fi
 
 # mvn package
 sudo docker build -t $1:$2 /home/ec2-user/addressbook
+sudo dokcer login -u $3 -p $4
+sudo docker push $1:$2
