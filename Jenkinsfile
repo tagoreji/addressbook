@@ -27,6 +27,7 @@ pipeline {
                      echo "Compiling the code in Env ${params.Env}"
                     }             
             }
+        }
         stage('Test') {
             when{
                 expression{
@@ -35,18 +36,22 @@ pipeline {
                 }
             }
             steps {
-                echo "Testing the code"
-            }
+                 script{
+                     echo "TESTING"
+                     echo "Testing the code in Env ${params.Env}"
+                    }    
+                }
             }
         stage('Package') {
             steps {
+                script{
                 echo "Packaging the code"
                 echo "Deploying the app version ${params.APPVERSION}"
 
             }
             }
         }
-        }
+        
         
     }
 }
