@@ -1,10 +1,10 @@
 pipeline {
     agent any
 
-    // tools {
-    //     // Install the Maven version configured as "M3" and add it to the path.
-    //     maven "mymaven"
-    // }
+    tools {
+        // Install the Maven version configured as "M3" and add it to the path.
+        maven "mymaven"
+    }
     parameters{
          string(name:'Env',defaultValue:'Test',description:'version to deploy')
         booleanParam(name:'executeTests',defaultValue: true,description:'decide to run tc')
@@ -25,6 +25,7 @@ pipeline {
               script{
                      echo "COMPILING"
                      echo "Compiling the code in Env ${params.Env}"
+                     sh "mvn compile"
                     }             
             }
         }
@@ -39,6 +40,7 @@ pipeline {
                  script{
                      echo "TESTING"
                      echo "Testing the code in Env ${params.Env}"
+                     sh "mvn test"
                     }    
                 }
             }
@@ -47,7 +49,7 @@ pipeline {
                 script{
                 echo "Packaging the code"
                 echo "Deploying the app version ${params.APPVERSION}"
-
+                sh "mvn package"
             }
             }
         }
