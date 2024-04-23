@@ -1,9 +1,15 @@
 pipeline {
-    agent none
+    agent any
 
-    tools {
-        // Install the Maven version configured as "M3" and add it to the path.
-        maven "mymaven"
+    // tools {
+    //     // Install the Maven version configured as "M3" and add it to the path.
+    //     maven "mymaven"
+    // }
+    parameters{
+         string(name:'Env',defaultValue:'Test',description:'version to deploy')
+        booleanParam(name:'executeTests',defaultValue: true,description:'decide to run tc')
+        choice(name:'APPVERSION',choices:['1.1','1.2','1.3'])
+
     }
     
     // environment{
@@ -18,10 +24,16 @@ pipeline {
             steps {              
               script{
                      echo "COMPILING"
-                     sh "mvn compile"
-              }             
+                     echo "Compiling the code in Env ${params.Env}"
+                    }             
             }
         stage('Test') {
+            when{
+                expression{
+                        params.executeTests == true
+
+                }
+            }
             steps {
                 echo "Testing the code"
             }
@@ -29,25 +41,12 @@ pipeline {
         stage('Package') {
             steps {
                 echo "Packaging the code"
+                echo "Deploying the app version ${params.APPVERSION}"
+
             }
             }
         }
         }
-        stage('containerise the packaging+push the image') {
-            agent any
-            steps {              
-
-                script{
-                     echo "Creating the package"
-                sshagent(['slave2']) {
-                sh "scp -o StrictHostKeyChecking=no server-script.sh ${BUILD_SERVER_IP}:/home/ec2-user"
-                sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER_IP} 'bash server-script.sh ${IMAGE_NAME} ${BUILD_NUMBER}'"
-               
-                
-                }             
-                }
-            }            
-        }
-
+        
     }
 }
