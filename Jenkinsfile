@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent none
 
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
@@ -12,10 +12,10 @@ pipeline {
 
     }
     
-    // environment{
-    //     BUILD_SERVER_IP='ec2-user@172.31.33.147'
-    //     IMAGE_NAME='devopstrainer/java-mvn-privaterepos'
-    // }
+    environment{
+        BUILD_SERVER_IP='ec2-user@172.31.15.104'
+        //IMAGE_NAME='devopstrainer/java-mvn-privaterepos'
+    }
 
     stages {
         stage('Compile') {
@@ -30,6 +30,7 @@ pipeline {
             }
         }
         stage('Test') {
+            agent any
             when{
                 expression{
                         params.executeTests == true
@@ -43,21 +44,27 @@ pipeline {
                      sh "mvn test"
                     }    
                 }
-            }
-        stage('Package') {
-            steps {
-                script{
-                echo "Packaging the code"
-                echo "Deploying the app version ${params.APPVERSION}"
-                sh "mvn package"
-            }
-            }
-        
-        post{
+                post{
             always{
                 junit 'target/surefire-reports/*.xml'
             }
         }
+            }
+        stage('Package') {
+            agent any 
+            steps {
+                script{
+                sshagent(['slave2']) {
+                    echo "Packaging the code"
+                echo "Deploying the app version ${params.APPVERSION}"
+                sh "scp -o StrictHostKeyChecking=no server-script.sh ${BUILD_SERVER_IP}:/home/ec2-user"
+                sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER_IP} 'bash server-script.sh'"
+                
+                
+            }
+            }
+        
+        
         
     }
             }
