@@ -5,7 +5,7 @@ pipeline {
     //     maven 'mymaven'
     // }
      environment{
-        IMAGE_NAME='devopstrainer/java-mvn-privaterepos:$BUILD_NUMBER'
+        IMAGE_NAME='devopstrainer/java-mvn-privaterepos'
         DEV_SERVER_IP='ec2-user@172.31.32.88'
         ACM_IP='ec2-user@172.31.11.162'
         APP_NAME='java-mvn-app'
@@ -49,7 +49,7 @@ pipeline {
                      sh "ssh -o StrictHostKeyChecking=no ${DEV_SERVER_IP} 'bash ~/server-script.sh'"
                 //     sh "ssh ${DEV_SERVER_IP} sudo docker build -t  ${IMAGE_NAME} /home/ec2-user/addressbook"
                     sh "ssh ${DEV_SERVER_IP} sudo docker login -u $USERNAME -p $PASSWORD"
-                    sh "ssh ${DEV_SERVER_IP} sudo docker push ${IMAGE_NAME}"
+                    sh "ssh ${DEV_SERVER_IP} sudo docker push ${IMAGE_NAME}:${BUILD_NUMBER}"
                     }
                     }
                 }
