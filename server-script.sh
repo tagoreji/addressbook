@@ -8,11 +8,11 @@ if [ -d "addressbook" ]
 then
   echo "repo is cloned and exists"
   cd /home/ec2-user/addressbook
-  git pull origin ANSIBLE_CICD
+  git pull origin april-ansible
 else
   git clone  https://github.com/preethid/addressbook.git
   cd addressbook
-  git checkout ANSIBLE_CICD
+  git checkout april-ansible
 fi
 
 sudo docker build -t $1:$2 /home/ec2-user/addressbook
