@@ -9,8 +9,8 @@ pipeline {
         DEV_SERVER_IP='ec2-user@172.31.32.88'
         ACM_IP='ec2-user@172.31.11.162'
         APP_NAME='java-mvn-app'
-        AWS_ACCESS_KEY_ID =credentials("AWS_ACCESS_KEY")
-        AWS_SECRET_ACCESS_KEY=credentials("AWS_SECRET_ACCESS_KEY")
+        AWS_ACCESS_KEY_ID =credentials("ACCESS_KEY")
+        AWS_SECRET_ACCESS_KEY=credentials("SECRET_ACCESS_KEY")
         DOCKER_REG_PASSWORD=credentials("DOCKER_REG_PASSWORD")
     }
     stages {
