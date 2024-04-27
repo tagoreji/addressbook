@@ -15,5 +15,5 @@ else
   git checkout april-anisble
 fi
 
-sudo docker build -t $1:$2 /home/ec2-user/addressbook
+# sudo docker build -t $1 /home/ec2-user/addressbook
 #devopstrainer/java-mvn-privaterepos:1
