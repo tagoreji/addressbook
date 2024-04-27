@@ -6,7 +6,7 @@ pipeline {
     // }
      environment{
         IMAGE_NAME='devopstrainer/java-mvn-privaterepos'
-        DEV_SERVER_IP='ec2-user@172.31.32.88'
+        DEV_SERVER_IP='ec2-user@172.31.39.165'
         ACM_IP='ec2-user@172.31.11.162'
         APP_NAME='java-mvn-app'
         AWS_ACCESS_KEY_ID =credentials("ACCESS_KEY")
