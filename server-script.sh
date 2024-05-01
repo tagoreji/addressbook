@@ -14,6 +14,7 @@ then
    git pull origin may-docker
 else
    git clone https://github.com/preethid/addressbook.git
+   cd /home/ec2-user/addressbook
    git checkout may-docker
 fi
 
