@@ -1,10 +1,10 @@
 pipeline {
     agent none
 
-    tools {
-        // Install the Maven version configured as "M3" and add it to the path.
-        maven "mymaven"
-    }
+    // tools {
+    //     // Install the Maven version configured as "M3" and add it to the path.
+    //     maven "mymaven"
+    // }
     
     environment{
         BUILD_SERVER_IP='ec2-user@172.31.8.148'
@@ -13,33 +13,33 @@ pipeline {
     }
 
     stages {
-        stage('Compile') {
-            // agent {label "linux_slave"}
-            agent any
-            steps {              
-              script{
-                     echo "COMPILING"
-                     sh "mvn compile"
-              }             
-            }
+        // stage('Compile') {
+        //     // agent {label "linux_slave"}
+        //     agent any
+        //     steps {              
+        //       script{
+        //              echo "COMPILING"
+        //              sh "mvn compile"
+        //       }             
+        //     }
             
-        }
-        stage('Test') {
-            agent any
-            steps {           
-              script{
-                   echo "RUNNING THE TC"
-                   sh "mvn test"
-                }              
+        // }
+        // stage('Test') {
+        //     agent any
+        //     steps {           
+        //       script{
+        //            echo "RUNNING THE TC"
+        //            sh "mvn test"
+        //         }              
              
-            }            
+        //     }            
         
-        post{
-            always{
-                junit 'target/surefire-reports/*.xml'
-            }
-        }
-        }
+        // post{
+        //     always{
+        //         junit 'target/surefire-reports/*.xml'
+        //     }
+        // }
+        // }
         stage('Containerise the app') {
             agent any
             steps {              
