@@ -1,26 +1,39 @@
 pipeline {
     agent any
 
-    tools {
-        // Install the Maven version configured as "M3" and add it to the path.
-        maven "mymaven"
-    }
+    // tools {
+    //     // Install the Maven version configured as "M3" and add it to the path.
+    //     // maven "M3"
+    // }
 
     stages {
         stage('Compile') {
             steps {
-               echo "compiling teh code"
+                script{
+                    echo "compiling code"
+    
+                }
             }
         }
-        stage('UnitTest') {
+        
+                stage('unit_test') {
             steps {
-               echo "Test teh code"
+                script{
+                        echo "testing code"
+
+    
+                }
             }
         }
-        stage('Package') {
+                stage('package') {
             steps {
-               echo "Package teh code"
+                script{
+                        echo "packaging code"
+
+    
+                }
             }
         }
+        
     }
 }
