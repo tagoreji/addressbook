@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script{
                         echo "testing code"
-                        sh "mvn unit_test"
+                        sh "mvn test"
 
     
                 }
