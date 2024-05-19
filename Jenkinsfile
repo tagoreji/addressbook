@@ -6,7 +6,9 @@ pipeline {
         maven "mymaven"
     }
     environment{
-        BUILD_SERVER = "ec2-user@172.31.37.2"
+        BUILD_SERVER = "ec2-user@172.31.37.2" // slave 2   manuallly set uped earlier worked fine without export commands
+       // BUILD_SERVER = "ec2-user@172.31.34.106" // slave 5 many iisues
+
     }
 
     stages {
