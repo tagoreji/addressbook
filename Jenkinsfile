@@ -50,7 +50,7 @@ pipeline {
                      sshagent(['SLAVE_2']) {
                         echo "testing code"
                         sh "scp  -o StrictHostKeyChecking=no server-config.sh ${BUILD_SERVER}:/home/ec2-user"
-                        sh "ssh  -o StrictHostKeyChecking=no ${BUILD_SERVER} 'chmod +x' 'bash server-config.sh'"
+                        sh "ssh  -o StrictHostKeyChecking=no ${BUILD_SERVER} 'bash -s && chmod +x server-config.sh && ./server-config.sh'"
                 }
                         echo "packaging code"
                         sh "mvn package"
