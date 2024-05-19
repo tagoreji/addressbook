@@ -44,7 +44,7 @@ pipeline {
         stage('package') {
             agent any
             // agent {label 'micro_slave_3'}
-            // hello  hi
+            //  OM NAMAH SHIVAAY
             steps {
                 script{
                         echo "packaging code"
