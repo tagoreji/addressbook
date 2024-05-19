@@ -5,6 +5,9 @@ pipeline {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "mymaven"
     }
+    environment{
+        BUILD_SERVER = "ec2-user@172.31.37.2"
+    }
 
     stages {
         stage('Compile') {
@@ -20,15 +23,12 @@ pipeline {
         }
 
         
-        stage('unit_test') {
+        stage('unit_test') {   // running on slave2 via ssh-agent
             agent any
             steps {
-
-                script{
-                        echo "testing code"
+                script{                      
                         sh "mvn test"
 
-    
                 }
             }
 
@@ -43,10 +43,15 @@ pipeline {
 
         stage('package') {
             agent any
-            // agent {label 'micro_slave_3'}
+            // agent {label 'micro_slave_3'}  manual connection
             //  OM NAMAH SHIVAAY
             steps {
                 script{
+                     sshagent(['SLAVE_2']) {
+                        echo "testing code"
+                        sh "scp  -o StrictHostKeyChecking=no server-config.sh ${BUILD_SERVER}:/home/ec2-user"
+                        sh "ssh  -o StrictHostKeyChecking=no ${BUILD_SERVER}}  'bash server-config.sh'"
+                }
                         echo "packaging code"
                         sh "mvn package"
 
